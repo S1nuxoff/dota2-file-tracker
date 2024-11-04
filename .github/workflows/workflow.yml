@@ -1,4 +1,4 @@
-name: Download CS Game Files
+name: Download Dota2 Game Files
 
 on:
   schedule:
@@ -13,13 +13,21 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
+<<<<<<< HEAD
       contents: write # Allows GITHUB_TOKEN to commit and push changes.
+=======
+      contents: write 
+>>>>>>> d9f8ccd8d1a442b6e56898af1d8e7c18d9720d8c
 
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v3
         with:
+<<<<<<< HEAD
           node-version: "20" # Specify Node.js version 20.
+=======
+          node-version: '20' 
+>>>>>>> d9f8ccd8d1a442b6e56898af1d8e7c18d9720d8c
       - name: Download new game files
         run: npm install && node index.js '${{ secrets.USERNAME }}' '${{ secrets.PASSWORD }}'
       - name: Read manifestId.txt
