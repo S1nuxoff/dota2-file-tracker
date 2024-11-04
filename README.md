@@ -4,13 +4,6 @@ The **Dota 2 File Tracker** is a script that tracks file updates and prices for 
 
 > **Note**: The main part of this code was adapted from the [counter-strike-file-tracker](https://github.com/ByMykel/counter-strike-file-tracker) project and customized to meet the unique file structure and data requirements of Dota 2.
 
-## Features
-
-- **Comprehensive Language Support**: This project supports over 20 languages for localization, allowing users worldwide to track Dota 2 item data in their preferred language.
-- **Batch Processing**: Optimized batch processing to efficiently handle large datasets of Dota 2 items and price histories.
-- **Rate-Limited API Calls**: Configured to respect Steam Market's rate limits, preventing any service disruptions due to excessive requests.
-- **Data Persistence**: Saves item data, pricing history, and processing states locally to minimize redundant calls and provide quick access to previously fetched data.
-
 ## Languages Supported
 
 The script supports localization files in the following languages:
