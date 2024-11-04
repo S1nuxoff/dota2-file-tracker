@@ -1,3 +1,4 @@
+
 # Dota 2 File Tracker
 
 The **Dota 2 File Tracker** is a script that tracks file updates and prices for items within Dota 2. This project provides a way to monitor item history, price data, and other game-related files directly from Steam. 
@@ -8,36 +9,36 @@ The **Dota 2 File Tracker** is a script that tracks file updates and prices for 
 
 The script supports localization files in the following languages:
 
-| Language         | Localization File                              |
-| ---------------- | ---------------------------------------------- |
-| Brazilian        | `resource/localization/items_brazilian.txt`    |
-| Bulgarian        | `resource/localization/items_bulgarian.txt`    |
-| Czech            | `resource/localization/items_czech.txt`        |
-| Danish           | `resource/localization/items_danish.txt`       |
-| Dutch            | `resource/localization/items_dutch.txt`        |
-| English          | `resource/localization/items_english.txt`      |
-| Finnish          | `resource/localization/items_finnish.txt`      |
-| French           | `resource/localization/items_french.txt`       |
-| German           | `resource/localization/items_german.txt`       |
-| Greek            | `resource/localization/items_greek.txt`        |
-| Hungarian        | `resource/localization/items_hungarian.txt`    |
-| Italian          | `resource/localization/items_italian.txt`      |
-| Japanese         | `resource/localization/items_japanese.txt`     |
-| Korean           | `resource/localization/items_koreana.txt`      |
-| LATAM Spanish    | `resource/localization/items_latam.txt`        |
-| Norwegian        | `resource/localization/items_norwegian.txt`    |
-| Polish           | `resource/localization/items_polish.txt`       |
-| Portuguese       | `resource/localization/items_portuguese.txt`   |
-| Romanian         | `resource/localization/items_romanian.txt`     |
-| Russian          | `resource/localization/items_russian.txt`      |
-| Simplified Chinese | `resource/localization/items_schinese.txt`   |
-| Spanish          | `resource/localization/items_spanish.txt`      |
-| Swedish          | `resource/localization/items_swedish.txt`      |
-| Traditional Chinese | `resource/localization/items_tchinese.txt`  |
-| Thai             | `resource/localization/items_thai.txt`         |
-| Turkish          | `resource/localization/items_turkish.txt`      |
-| Ukrainian        | `resource/localization/items_ukrainian.txt`    |
-| Vietnamese       | `resource/localization/items_vietnamese.txt`   |
+| Language         |
+| ---------------- |
+| Brazilian        |
+| Bulgarian        |
+| Czech            |
+| Danish           |
+| Dutch            |
+| English          |
+| Finnish          |
+| French           |
+| German           |
+| Greek            |
+| Hungarian        |
+| Italian          |
+| Japanese         |
+| Korean           |
+| LATAM Spanish    |
+| Norwegian        |
+| Polish           |
+| Portuguese       |
+| Romanian         |
+| Russian          |
+| Simplified Chinese|
+| Spanish          |
+| Swedish          |
+| Traditional Chinese|
+| Thai             |
+| Turkish          |
+| Ukrainian        |
+| Vietnamese       |
 
 ## Installation
 
@@ -46,3 +47,34 @@ To set up and run the project locally, follow these steps:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/S1nuxoff/dota2-file-tracker
+   ```
+
+2. **Navigate to the project directory**:
+   ```bash
+   cd dota2-file-tracker
+   ```
+
+3. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+4. **Run the script**:
+   To execute the script, use the following command, replacing `<steam_login>` and `<steam_password>` with your Steam credentials:
+   ```bash
+   node index.js <steam_login> <steam_password>
+   ```
+
+5. **Steam Account Requirement**:
+   Ensure that Dota 2 is added to your Steam library, as the script relies on access to Dota 2 files for parsing item data.
+
+6. **GitHub Actions Workflow**:
+   For automated execution through GitHub Actions workflow, set up **secret variables** in your GitHub project settings:
+   - `USERNAME` - Your Steam account username.
+   - `PASSWORD` - Your Steam account password.
+
+   > **Recommendation**: It is advised to use a Steam account without Steam Guard for seamless automation, as Steam Guard might interfere with automated logins.
+
+## Data Parsing
+
+All items are parsed and saved to a JSON file located in the `static` folder: [items_game.txt.json](https://github.com/S1nuxoff/dota2-file-tracker/blob/main/static/items_game.txt.json).
