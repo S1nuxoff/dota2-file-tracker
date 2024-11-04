@@ -40,7 +40,7 @@ The script supports localization files in the following languages:
 
 ## Installation
 
-To set up and run the project locally, follow these steps:
+Follow these steps to set up and run the project locally:
 
 1. **Clone the repository**:
    ```bash
@@ -57,17 +57,21 @@ To set up and run the project locally, follow these steps:
    npm install
    ```
 
-4. **Run the script**:
-   To execute the script, use the following command, replacing `<steam_login>` and `<steam_password>` with your Steam credentials:
-   ```bash
-   node index.js <steam_login> <steam_password>
-   ```
+## Running the Script
 
-5. **Steam Account Requirement**:
-   Ensure that Dota 2 is added to your Steam library, as the script relies on access to Dota 2 files for parsing item data.
+To execute the script, use the following command, replacing `<steam_login>` and `<steam_password>` with your Steam credentials:
 
-6. **GitHub Actions Workflow**:
-   For automated execution through GitHub Actions workflow, set up **secret variables** in your GitHub project settings:
+```bash
+node index.js <steam_login> <steam_password>
+```
+
+**Important**: Ensure that Dota 2 is added to your Steam library. The script relies on access to Dota 2 files for parsing item data.
+
+## GitHub Actions Workflow for Automation
+
+To run this script automatically via GitHub Actions:
+
+1. Set up **secret variables** in your GitHub project settings:
    - `USERNAME` - Your Steam account username.
    - `PASSWORD` - Your Steam account password.
 
