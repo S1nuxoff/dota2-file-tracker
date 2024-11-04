@@ -1,12 +1,6 @@
-// This project is based on the ByMykel counter-strike-file-tracker repository (https://github.com/ByMykel/counter-strike-file-tracker),
-// which provides a file tracker for Counter-Strike 2. In this project, the tracker is adapted for Dota 2 with added
-// support for the required depots and data structures specific to the game.
-
 const SteamUser = require("steam-user");
 const fs = require("fs");
 const vpk = require("vpk");
-const parser = require("@node-steam/vdf");
-const { exec } = require("child_process");
 
 const appId = 570;
 const depotIds = [381451, 381452, 381453, 381454, 381455, 373301];
@@ -15,34 +9,34 @@ const temp = "./temp";
 const manifestIdFile = "manifestId.txt";
 
 const vpkFiles = [
-  // "resource/localization/items_brazilian.txt",
-  // "resource/localization/items_bulgarian.txt",
-  // "resource/localization/items_czech.txt",
-  // "resource/localization/items_danish.txt",
-  // "resource/localization/items_dutch.txt",
+  "resource/localization/items_brazilian.txt",
+  "resource/localization/items_bulgarian.txt",
+  "resource/localization/items_czech.txt",
+  "resource/localization/items_danish.txt",
+  "resource/localization/items_dutch.txt",
   "resource/localization/items_english.txt",
-  // "resource/localization/items_finnish.txt",
-  // "resource/localization/items_french.txt",
-  // "resource/localization/items_german.txt",
-  // "resource/localization/items_greek.txt",
-  // "resource/localization/items_hungarian.txt",
-  // "resource/localization/items_italian.txt",
-  // "resource/localization/items_japanese.txt",
-  // "resource/localization/items_koreana.txt",
-  // "resource/localization/items_latam.txt",
-  // "resource/localization/items_norwegian.txt",
+  "resource/localization/items_finnish.txt",
+  "resource/localization/items_french.txt",
+  "resource/localization/items_german.txt",
+  "resource/localization/items_greek.txt",
+  "resource/localization/items_hungarian.txt",
+  "resource/localization/items_italian.txt",
+  "resource/localization/items_japanese.txt",
+  "resource/localization/items_koreana.txt",
+  "resource/localization/items_latam.txt",
+  "resource/localization/items_norwegian.txt",
   "resource/localization/items_polish.txt",
-  // "resource/localization/items_portuguese.txt",
-  // "resource/localization/items_romanian.txt",
+  "resource/localization/items_portuguese.txt",
+  "resource/localization/items_romanian.txt",
   "resource/localization/items_russian.txt",
-  // "resource/localization/items_schinese.txt",
-  // "resource/localization/items_spanish.txt",
-  // "resource/localization/items_swedish.txt",
-  // "resource/localization/items_tchinese.txt",
-  // "resource/localization/items_thai.txt",
-  // "resource/localization/items_turkish.txt",
+  "resource/localization/items_schinese.txt",
+  "resource/localization/items_spanish.txt",
+  "resource/localization/items_swedish.txt",
+  "resource/localization/items_tchinese.txt",
+  "resource/localization/items_thai.txt",
+  "resource/localization/items_turkish.txt",
   "resource/localization/items_ukrainian.txt",
-  // "resource/localization/items_vietnamese.txt",
+  "resource/localization/items_vietnamese.txt",
   "scripts/items/items_game.txt",
 ];
 
@@ -110,7 +104,6 @@ function getRequiredVPKFiles(vpkDir) {
       }
     }
   }
-
   return Array.from(requiredIndices).sort((a, b) => a - b);
 }
 
@@ -168,7 +161,7 @@ function trimBOM(buffer) {
   }
 }
 
-function parseComplexVDF(fileContent) {
+function parseVDF(fileContent) {
   const lines = fileContent.split("\n");
   const parsedData = {};
 
@@ -230,7 +223,7 @@ function extractVPKFiles(vpkDir) {
         console.log(`Processing file: ${fileName}`);
 
         try {
-          const parsedData = parseComplexVDF(fileContent);
+          const parsedData = parseVDF(fileContent);
 
           fs.writeFileSync(
             `${dir}/${fileName}.json`,
