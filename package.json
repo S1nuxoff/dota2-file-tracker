@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@node-steam/vdf": "^2.2.0",
+    "axios": "^1.7.7",
+    "punycode": "^2.3.1",
+    "steam": "^1.4.1",
+    "steam-user": "^5.2.0",
+    "vpk": "^0.2.0"
+  }
+}
