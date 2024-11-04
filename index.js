@@ -1,3 +1,7 @@
+// This project is based on the ByMykel counter-strike-file-tracker repository (https://github.com/ByMykel/counter-strike-file-tracker),
+// which provides a file tracker for Counter-Strike 2. In this project, the tracker is adapted for Dota 2 with added
+// support for the required depots and data structures specific to the game.
+
 const SteamUser = require("steam-user");
 const fs = require("fs");
 const vpk = require("vpk");
@@ -5,7 +9,7 @@ const parser = require("@node-steam/vdf");
 const { exec } = require("child_process");
 
 const appId = 570;
-const depotIds = [381451, 381452, 381453, 381454, 381455, 373301]; // List of depots
+const depotIds = [381451, 381452, 381453, 381454, 381455, 373301];
 const dir = `./static`;
 const temp = "./temp";
 const manifestIdFile = "manifestId.txt";
@@ -122,7 +126,6 @@ async function downloadVPKArchives(user, manifests, requiredIndices) {
 
     let fileFound = false;
 
-    // Search through all depots for the VPK file
     for (const depotId of depotIds) {
       const manifest = manifests[depotId];
 
@@ -164,8 +167,9 @@ function trimBOM(buffer) {
     return buffer;
   }
 }
+
 function parseComplexVDF(fileContent) {
-  const lines = fileContent.split("\n"); // Разделяем на строки
+  const lines = fileContent.split("\n");
   const parsedData = {};
 
   let currentSection = null;
@@ -174,39 +178,31 @@ function parseComplexVDF(fileContent) {
   for (const line of lines) {
     const trimmedLine = line.trim();
 
-    // Игнорируем пустые строки и комментарии
     if (!trimmedLine || trimmedLine.startsWith("//")) {
       continue;
     }
 
-    // Пытаемся найти пары ключ-значение
     const match = trimmedLine.match(/"(.+?)"\s+"(.+?)"/);
     if (match) {
       const key = match[1];
       const value = match[2];
 
-      // Если есть текущий раздел и подраздел, добавляем туда
       if (currentSection && currentSubsection) {
         parsedData[currentSection][currentSubsection][key] = value;
       } else if (currentSection) {
-        // Если есть только текущий раздел, добавляем туда
         parsedData[currentSection][key] = value;
       } else {
-        // Иначе добавляем на верхний уровень
         parsedData[key] = value;
       }
     } else {
-      // Если строка — это название нового раздела или подраздела
       const sectionMatch = trimmedLine.match(/"(.+?)"/);
       if (sectionMatch) {
         const sectionName = sectionMatch[1];
 
         if (currentSection && !currentSubsection) {
-          // Создаем новый подраздел внутри текущего раздела
           currentSubsection = sectionName;
           parsedData[currentSection][currentSubsection] = {};
         } else {
-          // Создаем новый раздел
           currentSection = sectionName;
           currentSubsection = null;
           parsedData[currentSection] = {};
@@ -219,7 +215,7 @@ function parseComplexVDF(fileContent) {
 }
 
 function extractVPKFiles(vpkDir) {
-  console.log("Извлечение VPK файлов");
+  console.log("Extracting VPK files");
 
   for (const f of vpkFiles) {
     let found = false;
@@ -229,14 +225,11 @@ function extractVPKFiles(vpkDir) {
         const filepath = f.split("/");
         const fileName = filepath[filepath.length - 1];
 
-        // Убираем BOM и конвертируем файл в строку
         const fileContent = trimBOM(fileBuffer).toString("utf-8");
 
-        // Логируем файл, который обрабатывается
-        console.log(`Обработка файла: ${fileName}`);
+        console.log(`Processing file: ${fileName}`);
 
         try {
-          // Используем кастомный парсер для более сложных файлов
           const parsedData = parseComplexVDF(fileContent);
 
           fs.writeFileSync(
@@ -244,9 +237,7 @@ function extractVPKFiles(vpkDir) {
             JSON.stringify(parsedData, null, 4)
           );
         } catch (err) {
-          console.error(
-            `Ошибка при парсинге файла ${fileName}: ${err.message}`
-          );
+          console.error(`Error parsing file ${fileName}: ${err.message}`);
           fs.writeFileSync(`${dir}/${fileName}_error.txt`, fileContent);
         }
 
@@ -256,7 +247,7 @@ function extractVPKFiles(vpkDir) {
     }
 
     if (!found) {
-      console.error(`Не удалось найти ${f}`);
+      console.error(`Could not find ${f}`);
     }
   }
 }
