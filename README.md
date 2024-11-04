@@ -1,8 +1,6 @@
 
 # Dota 2 File Tracker
 
-The **Dota 2 File Tracker** is a script that tracks file updates and prices for items within Dota 2. This project provides a way to monitor item history, price data, and other game-related files directly from Steam. 
-
 > **Note**: The main part of this code was adapted from the [counter-strike-file-tracker](https://github.com/ByMykel/counter-strike-file-tracker) project and customized to meet the unique file structure and data requirements of Dota 2.
 
 ## Languages Supported
