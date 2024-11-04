@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write # Allow the GITHUB_TOKEN to commit and push changes.
+      contents: write  # Разрешает GITHUB_TOKEN совершать коммиты и отправлять изменения.
 
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v3
         with:
-          node-version: "20"
+          node-version: '20'  # Явно указываем версию Node.js 20.
       - name: Download new game files
         run: npm install && node index.js '${{ secrets.USERNAME }}' '${{ secrets.PASSWORD }}'
       - name: Read manifestId.txt
