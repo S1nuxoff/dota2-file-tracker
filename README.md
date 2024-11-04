@@ -3,41 +3,6 @@
 
 > **Note**: The main part of this code was adapted from the [counter-strike-file-tracker](https://github.com/ByMykel/counter-strike-file-tracker) project and customized to meet the unique file structure and data requirements of Dota 2.
 
-## Languages Supported
-
-The script supports localization files in the following languages:
-
-| Language         |
-| ---------------- |
-| Brazilian        |
-| Bulgarian        |
-| Czech            |
-| Danish           |
-| Dutch            |
-| English          |
-| Finnish          |
-| French           |
-| German           |
-| Greek            |
-| Hungarian        |
-| Italian          |
-| Japanese         |
-| Korean           |
-| LATAM Spanish    |
-| Norwegian        |
-| Polish           |
-| Portuguese       |
-| Romanian         |
-| Russian          |
-| Simplified Chinese|
-| Spanish          |
-| Swedish          |
-| Traditional Chinese|
-| Thai             |
-| Turkish          |
-| Ukrainian        |
-| Vietnamese       |
-
 ## Installation
 
 Follow these steps to set up and run the project locally:
@@ -85,3 +50,39 @@ All items are parsed and saved to a JSON file located in the `static` folder: [i
 
 If you want to access other VPK files from the game, you can check the paths in the `vpkDirContent` folder within the [vpkDirContent.json](https://github.com/S1nuxoff/dota2-file-tracker/blob/main/vpkDirContent/vpkDirContent.json) file.
 More information: [SteamDB - Dota 2 Depots](https://steamdb.info/app/570/depots/)
+
+## Languages Supported
+
+The script supports localization files in the following languages:
+
+| Language         |
+| ---------------- |
+| Brazilian        |
+| Bulgarian        |
+| Czech            |
+| Danish           |
+| Dutch            |
+| English          |
+| Finnish          |
+| French           |
+| German           |
+| Greek            |
+| Hungarian        |
+| Italian          |
+| Japanese         |
+| Korean           |
+| LATAM Spanish    |
+| Norwegian        |
+| Polish           |
+| Portuguese       |
+| Romanian         |
+| Russian          |
+| Simplified Chinese|
+| Spanish          |
+| Swedish          |
+| Traditional Chinese|
+| Thai             |
+| Turkish          |
+| Ukrainian        |
+| Vietnamese       |
+
