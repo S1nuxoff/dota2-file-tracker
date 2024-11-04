@@ -80,3 +80,8 @@ To run this script automatically via GitHub Actions:
 ## Data Parsing
 
 All items are parsed and saved to a JSON file located in the `static` folder: [items_game.txt.json](https://github.com/S1nuxoff/dota2-file-tracker/blob/main/static/items_game.txt.json).
+
+## Additional VPK Files
+
+If you want to access other VPK files from the game, you can check the paths in the `vpkDirContent` folder within the [vpkDirContent.json](https://github.com/S1nuxoff/dota2-file-tracker/blob/main/vpkDirContent/vpkDirContent.json) file.
+More information: [SteamDB - Dota 2 Depots](https://steamdb.info/app/570/depots/)
