@@ -1,6 +1,7 @@
 const SteamUser = require("steam-user");
 const fs = require("fs");
 const vpk = require("vpk");
+const path = require("path");
 
 const appId = 570;
 const depotIds = [381451, 381452, 381453, 381454, 381455, 373301];
@@ -161,52 +162,6 @@ function trimBOM(buffer) {
   }
 }
 
-function parseVDF(fileContent) {
-  const lines = fileContent.split("\n");
-  const parsedData = {};
-
-  let currentSection = null;
-  let currentSubsection = null;
-
-  for (const line of lines) {
-    const trimmedLine = line.trim();
-
-    if (!trimmedLine || trimmedLine.startsWith("//")) {
-      continue;
-    }
-
-    const match = trimmedLine.match(/"(.+?)"\s+"(.+?)"/);
-    if (match) {
-      const key = match[1];
-      const value = match[2];
-
-      if (currentSection && currentSubsection) {
-        parsedData[currentSection][currentSubsection][key] = value;
-      } else if (currentSection) {
-        parsedData[currentSection][key] = value;
-      } else {
-        parsedData[key] = value;
-      }
-    } else {
-      const sectionMatch = trimmedLine.match(/"(.+?)"/);
-      if (sectionMatch) {
-        const sectionName = sectionMatch[1];
-
-        if (currentSection && !currentSubsection) {
-          currentSubsection = sectionName;
-          parsedData[currentSection][currentSubsection] = {};
-        } else {
-          currentSection = sectionName;
-          currentSubsection = null;
-          parsedData[currentSection] = {};
-        }
-      }
-    }
-  }
-
-  return parsedData;
-}
-
 function extractVPKFiles(vpkDir) {
   console.log("Extracting VPK files");
 
@@ -220,19 +175,16 @@ function extractVPKFiles(vpkDir) {
 
         const fileContent = trimBOM(fileBuffer).toString("utf-8");
 
-        console.log(`Processing file: ${fileName}`);
+        console.log(`Parsing and saving file: ${fileName}`);
 
-        try {
-          const parsedData = parseVDF(fileContent);
-
-          fs.writeFileSync(
-            `${dir}/${fileName}.json`,
-            JSON.stringify(parsedData, null, 4)
-          );
-        } catch (err) {
-          console.error(`Error parsing file ${fileName}: ${err.message}`);
-          fs.writeFileSync(`${dir}/${fileName}_error.txt`, fileContent);
-        }
+        // Парсим файл и сохраняем в JSON
+        const parsedData = parseItemsGame(fileContent);
+        const jsonFileName = fileName.replace(".txt", ".json");
+        fs.writeFileSync(
+          `${dir}/${jsonFileName}`,
+          JSON.stringify(parsedData, null, 4),
+          "utf-8"
+        );
 
         found = true;
         break;
@@ -243,6 +195,45 @@ function extractVPKFiles(vpkDir) {
       console.error(`Could not find ${f}`);
     }
   }
+}
+
+function parseItemsGame(content) {
+  const lines = content.split("\n");
+
+  let stack = [];
+  let result = {};
+  let current = result;
+  let currentKey = null;
+
+  for (let line of lines) {
+    line = line.trim();
+
+    if (line === "{") {
+      let newDict = {};
+      stack.push([current, currentKey]);
+      if (currentKey !== null && currentKey !== undefined) {
+        current[currentKey] = newDict;
+      } else if (Array.isArray(current)) {
+        current.push(newDict);
+      }
+      current = newDict;
+      currentKey = null;
+    } else if (line === "}") {
+      [current, currentKey] = stack.pop();
+    } else if (line.includes("\t")) {
+      let idx = line.indexOf("\t");
+      let key = line.substring(0, idx).trim().replace(/^"|"$/g, "");
+      let value = line
+        .substring(idx + 1)
+        .trim()
+        .replace(/^"|"$/g, "");
+      current[key] = value;
+    } else if (line !== "") {
+      currentKey = line.replace(/^"|"$/g, "");
+    }
+  }
+
+  return result;
 }
 
 (async () => {
