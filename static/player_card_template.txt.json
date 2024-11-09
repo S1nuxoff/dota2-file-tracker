@@ -1,0 +1,28 @@
+{
+    "99999": {
+        "prefab": "player_card",
+        "item_type_name": "#DOTA_WearableType_Player_Card",
+        "developer": "1",
+        "creation_date": "2013-05-21",
+        "tool": {
+            "type": "player_card",
+            "use_string": "#StampPlayerCard"
+        }
+    },
+    "capabilities": {
+        "usable_gc": "1",
+        "usable_out_of_game": "1",
+        "attributes": {}
+    },
+    "international tag": {
+        "attribute_class": "international tag",
+        "value": "2013",
+        "disallow recycling": {
+            "attribute_class": "disallow_recycling",
+            "value": "1"
+        }
+    },
+    "localization": {
+        "item_type_name": "Player Card"
+    }
+}

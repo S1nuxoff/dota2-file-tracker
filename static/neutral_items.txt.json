@@ -1,0 +1,28 @@
+{
+    "neutral_items": {
+        "1": {}
+    },
+    "drop_rates": {
+        "60:00": {
+            "0": "10",
+            "1": "10",
+            "2": "10",
+            "3": "10",
+            "4": "10"
+        }
+    },
+    "items": {
+        "item_force_boots": "1",
+        "item_desolator_2": "1",
+        "item_seer_stone": "1",
+        "item_mirror_shield": "1",
+        "item_apex": "1",
+        "item_demonicon": "1",
+        "item_force_field": "1",
+        "item_pirate_hat": "1",
+        "item_giants_ring": "1",
+        "item_unwavering_condition": "1",
+        "item_book_of_shadows": "1",
+        "item_panic_button": "1"
+    }
+}
