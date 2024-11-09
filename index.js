@@ -37,7 +37,7 @@ const vpkFiles = [
   "resource/localization/items_turkish.txt",
   "resource/localization/items_ukrainian.txt",
   "resource/localization/items_vietnamese.txt",
-  "scripts/items/items_game.txt",
+  "scripts/items/items_game.txt"
 ];
 
 async function getManifests(user) {
