@@ -41,7 +41,7 @@ const vpkFiles = [
   "scripts/npc/items.txt",
   "scripts/npc/neutral_items.txt",
   "scripts/tournaments/ti_featured_items.txt",
-  "scripts/npc/npc_popular_items.txt"
+  "scripts/npc/npc_popular_items.txt",
 ];
 
 async function getManifests(user) {
