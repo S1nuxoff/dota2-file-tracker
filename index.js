@@ -8,6 +8,9 @@ const depotIds = [381451, 381452, 381453, 381454, 381455, 373301];
 const dir = `./static`;
 const temp = "./temp";
 const manifestIdFile = "manifestId.txt";
+// Raised when the JSON written changes, so the next run writes it again for the same game version
+const FORMAT = 2;
+const formatFile = "format.txt";
 
 const vpkFiles = [
   "resource/localization/items_brazilian.txt",
@@ -197,6 +200,8 @@ function extractVPKFiles(vpkDir) {
   }
 }
 
+// KeyValues text into JSON. A key met again in the same block (items_game's visuals repeat
+// "asset_modifier") keeps every value: the first under its name, the next as "<key>#2", "<key>#3"
 function parseItemsGame(content) {
   const lines = content.split("\n");
 
@@ -204,6 +209,13 @@ function parseItemsGame(content) {
   let result = {};
   let current = result;
   let currentKey = null;
+  // The name a key takes in a block that may have it already
+  const keyIn = (object, key) => {
+    if (!(key in object)) return key;
+    let n = 2;
+    while (`${key}#${n}` in object) n++;
+    return `${key}#${n}`;
+  };
 
   for (let line of lines) {
     line = line.trim();
@@ -212,7 +224,7 @@ function parseItemsGame(content) {
       let newDict = {};
       stack.push([current, currentKey]);
       if (currentKey !== null && currentKey !== undefined) {
-        current[currentKey] = newDict;
+        current[keyIn(current, currentKey)] = newDict;
       } else if (Array.isArray(current)) {
         current.push(newDict);
       }
@@ -227,7 +239,7 @@ function parseItemsGame(content) {
         .substring(idx + 1)
         .trim()
         .replace(/^"|"$/g, "");
-      current[key] = value;
+      current[keyIn(current, key)] = value;
     } else if (line !== "") {
       currentKey = line.replace(/^"|"$/g, "");
     }
@@ -236,7 +248,9 @@ function parseItemsGame(content) {
   return result;
 }
 
-(async () => {
+module.exports = { parseItemsGame, trimBOM };
+
+if (require.main === module) (async () => {
   if (process.argv.length != 4) {
     console.error(
       `Missing input arguments, expected 4 got ${process.argv.length}`
@@ -287,7 +301,16 @@ function parseItemsGame(content) {
       }
     }
 
-    if (existingManifestId == latestManifestId) {
+    let existingFormat = "";
+    try {
+      existingFormat = fs.readFileSync(`${dir}/${formatFile}`, "utf8").trim();
+    } catch (err) {
+      if (err.code != "ENOENT") {
+        throw err;
+      }
+    }
+
+    if (existingManifestId == latestManifestId && existingFormat == String(FORMAT)) {
       console.log("Latest manifest ID matches existing manifest ID, exiting");
       process.exit(0);
     }
@@ -305,6 +328,7 @@ function parseItemsGame(content) {
 
     try {
       fs.writeFileSync(`${dir}/${manifestIdFile}`, latestManifestId);
+      fs.writeFileSync(`${dir}/${formatFile}`, String(FORMAT));
     } catch (err) {
       throw err;
     }
